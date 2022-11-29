@@ -53,9 +53,24 @@ public class BankDao implements BankDaoInterface{
 	}
 
 	@Override
-	public void CreateUser(String username, String password) {
+	public void CreateUser(String username,  String contact, String address, String password, int initialdeposit) {
+			try {
+				PreparedStatement pstmt = connection
+						.prepareStatement("Insert bank_user(user_id, user_name, user_contact, user_address, user_password, user_initialdeposit)" + "value(NULL,?,?,?, ?, ?)");
+				pstmt.setString(1, username);
+				pstmt.setString(2, contact);
+				pstmt.setString(3, address);
+				pstmt.setString(4, password);
+				pstmt.setInt(5, initialdeposit);
+				pstmt.executeUpdate();
+				System.out.printf("\nWelcome %s\n", username);
+
+			} catch (Exception e) {
+				System.out.println("Something went wrong, cannot create new account");
+			}
+		}
+
 
 		
-	}
-
+	
 }
