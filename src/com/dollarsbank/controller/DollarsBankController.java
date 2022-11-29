@@ -19,7 +19,6 @@ public class DollarsBankController {
 		Scanner input1 = new Scanner(System.in);
 		final int MAXATTEMPTS = 3;
 		int logInAttenpts = 0;
-		boolean active = false;
 		boolean entryStatus = false;
 		String username = "";
 		String password = "";
@@ -42,6 +41,7 @@ public class DollarsBankController {
 					password = "";
 					logInAttenpts += 1;
 					throw new BadLoginCredentialException();
+					
 				}
 			} catch (BadLoginCredentialException e) {
 				System.out.println("\n" + e.getMessage() + "\n");
