@@ -2,6 +2,8 @@ package com.dollarsbank.model;
 
 import java.util.List;
 
+
+// Account
 public class Account {
 
 	
