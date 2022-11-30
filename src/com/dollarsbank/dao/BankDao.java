@@ -3,6 +3,7 @@ package com.dollarsbank.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.dollarsbank.connection.ConnManagerWithProperties;
 import com.dollarsbank.exception.BadLoginCredentialException;
@@ -70,7 +71,111 @@ public class BankDao implements BankDaoInterface{
 			}
 		}
 
+	@Override
+	public void Deposit() {
+		// TODO Auto-generated method stub
+		try {
 
+			PreparedStatement pstmt = connection
+					.prepareStatement("update watch_instance set watch_instance.status_id = ? "
+							+ "where watch_instance.show_id = ? && watch_instance.user_id = ?");
+			pstmt.setInt(1, x);
+			pstmt.setInt(2, getShowId(showTitle));
+			pstmt.setInt(3, getUserId(username));
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Can not complete request. Soory:)");
+
+		}
+
+	}
 		
 	
+
+	@Override
+	public void Withraw() {
+		try {
+
+			PreparedStatement pstmt = connection
+					.prepareStatement("update watch_instance set watch_instance.status_id = ? "
+							+ "where watch_instance.show_id = ? && watch_instance.user_id = ?");
+			pstmt.setInt(1, x);
+			pstmt.setInt(2, getShowId(showTitle));
+			pstmt.setInt(3, getUserId(username));
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Can not complete request. Soory:)");
+
+		}
+
+	}
+		
+	
+
+	@Override
+	public void Transfer() {
+		try {
+
+			PreparedStatement pstmt = connection
+					.prepareStatement("update watch_instance set watch_instance.status_id = ? "
+							+ "where watch_instance.show_id = ? && watch_instance.user_id = ?");
+			pstmt.setInt(1, x);
+			pstmt.setInt(2, getShowId(showTitle));
+			pstmt.setInt(3, getUserId(username));
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Can not complete request. Soory:)");
+
+		}
+
+	}
+
+	@Override
+	public void History() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void GetUser() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private int getUserId(String username) {
+
+		try {
+			PreparedStatement pstmt = connection.prepareStatement("Select user_id from TV_user where user_name = ?");
+			pstmt.setString(1, username);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("user_id");
+
+				return id;
+			}
+		} catch (SQLException e) {
+			System.out.println("User: = " + username + " not found.");
+		}
+		return -1;
+	}
+	
+	private int getAccountId(String username) {
+
+		try {
+			PreparedStatement pstmt = connection.prepareStatement("Select user_id from TV_user where user_name = ?");
+			pstmt.setString(1, username);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("user_id");
+
+				return id;
+			}
+		} catch (SQLException e) {
+			System.out.println("User: = " + username + " not found.");
+		}
+		return -1;
+	}
 }

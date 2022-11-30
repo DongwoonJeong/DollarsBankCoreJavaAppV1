@@ -9,8 +9,16 @@ import com.dollarsbank.exception.BadLoginCredentialException;
 
 public class DollarsBankController {
 
+		BankDao banksql = new BankDao();
 	public void createAccount() {
-		// TODO Auto-generated method stub
+		Scanner input = new Scanner(System.in);
+		String username = "";
+		String password = "";
+		System.out.println("Please enter your new user name:");
+		username = input.nextLine();
+		System.out.println("Please enter your new password:");
+		password = input.nextLine();
+		banksql.Register(username, password);
 		
 	}
 
@@ -22,7 +30,6 @@ public class DollarsBankController {
 		boolean entryStatus = false;
 		String username = "";
 		String password = "";
-		BankDao banksql = new BankDao();
 		while (logInAttenpts < MAXATTEMPTS && entryStatus == false && username.equalsIgnoreCase("")) {
 			try {
 				System.out.println("User Id :");
