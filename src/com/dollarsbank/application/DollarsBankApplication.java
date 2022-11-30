@@ -20,9 +20,11 @@ public class DollarsBankApplication {
 			int select = sc.nextInt();
 			if (select == 1) {
 				control.createAccount();
+				
 			}
 			if (select == 2) {
 				control.bankLogin();
+				
 			}
 			if (select == 3) {
 				System.out.println("system terminating");

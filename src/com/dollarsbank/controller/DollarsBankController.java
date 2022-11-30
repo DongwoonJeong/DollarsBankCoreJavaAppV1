@@ -1,6 +1,7 @@
 package com.dollarsbank.controller;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ import com.dollarsbank.model.Account;
 public class DollarsBankController {
 	// BankDao banksql = new BankDao();
 	private ArrayList<Account> accounts = new ArrayList<Account>();
+	
 	Scanner input = new Scanner(System.in);
 
 	public void createAccount() {
@@ -49,6 +51,9 @@ public class DollarsBankController {
 	}
 
 	public void bankLogin() {
+		
+		accounts.add(new Account("1","1","1","1","1",1,null));
+		accounts.add(new Account("2","John","1123451","211 USA","12",1000,null));
 		boolean login = false;
 		System.out.println("+---------------------+");
 		System.out.println("| Enter Login Details |");
@@ -57,64 +62,74 @@ public class DollarsBankController {
 		String acc_id = input.nextLine();
 		System.out.println("Passwod :");
 		String password = input.nextLine();
-		System.out.println(accounts);
-		try {
-			for (Account acc : accounts) {
-				if (acc.getAcc_id().equals(acc_id) && acc.getPassword().equals(password)) {
-					System.out.println("login success");
-					login = true;
-				} else {
-					System.out.println("id does not exist.");
+		while (!login) {
+			try {
+				for (Account acc : accounts) {
+					if (acc.getAcc_id().equals(acc_id) && acc.getPassword().equals(password)) {
+						System.out.println("login success");
+						login = true;
+					} else {
+						System.out.println("id does not exist.");
+						
+					}
+				}
+			} catch (Exception e) {
+
+			}
+		}
+			while (login) {
+				try {
+					System.out.println("+---------------------+");
+					System.out.println("| Welcome customer!!! |");
+					System.out.println("+---------------------+");
+					System.out.println("1. Deposit Amount");
+					System.out.println("2. Withdraw Amount");
+					System.out.println("3. Funds Transfer");
+					System.out.println("4. View 5 Recent Transactions");
+					System.out.println("5. Display Customer Information");
+					System.out.println("6. Sign Out");
+
+					int selec = Integer.parseInt(input.nextLine());
+					int id = Integer.parseInt(acc_id);
+					switch (selec) {
+					case 1:
+						System.out.println("deposit amount");
+						double depo = input.nextInt();
+
+						deposit(acc_id, depo);
+						break;
+					case 2:
+						withraw();
+						break;
+					case 3:
+						transfer();
+						break;
+					case 4:
+						history();
+						break;
+					case 5:
+						info(id - 1);
+						break;
+					case 6:
+						login = false;
+
+					}
+				} catch (InputMismatchException e) {
+					System.out.println("\nPlease enter a vaild option\n");
 				}
 			}
-		} catch (Exception e) {
-
 		}
-
-		while (login) {
-			System.out.println("+---------------------+");
-			System.out.println("| Welcome customer!!! |");
-			System.out.println("+---------------------+");
-			System.out.println("1. Deposit Amount");
-			System.out.println("2. Withdraw Amount");
-			System.out.println("3. Funds Transfer");
-			System.out.println("4. View 5 Recent Transactions");
-			System.out.println("5. Display Customer Information");
-			System.out.println("6. Sign Out");
-
-			int selec = Integer.parseInt(input.nextLine());
-			int id = Integer.parseInt(acc_id);
-			switch (selec) {
-			case 1:
-				deposit();
-				break;
-			case 2:
-				withraw();
-				break;
-			case 3:
-				transfer();
-				break;
-			case 4:
-				history();
-				break;
-			case 5:
-				info(id);
-				break;
-			case 6:
-				login = false;
-				
-			}
-		}
-
-	}
+	
 
 
 
 	private void info(int id) {
-		System.out.println("User " + id);
-		System.out.println("Name: " + accounts.get(id).getName());
+		System.out.println("--------------------------------");
+		System.out.println("User Id: " + id+1);
+		System.out.println("User Name: " + accounts.get(id).getName());
 		System.out.println("Address: " + accounts.get(id).getAddress());
 		System.out.println("Balance: " + accounts.get(id).getInitial());
+		System.out.println("--------------------------------");
 	}
 
 	private void history() {
@@ -129,9 +144,15 @@ public class DollarsBankController {
 
 	}
 
-	private void deposit() {
-		System.out.println("deposit amount");
-		int depo = input.nextInt();
+	private void deposit(String id, double depo) {
+		double bal=0;
+		for (Account acc : accounts) {
+			if(acc.getAcc_id().equals(id)) {
+				bal = depo + acc.getInitial();
+				System.out.println("Deposited " + bal);
+			}
+			
+			} 
 	}
 
 	public ArrayList<Account> getAccounts() {

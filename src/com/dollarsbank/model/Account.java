@@ -17,8 +17,7 @@ public class Account {
 	
 	
 
-
-	public Account(String acc_id, String name, String password, String address, String contact, int initial, List<String> history) {
+	public Account(String acc_id, String name, String contact, String address, String password, int initial, List<String> history) {
 		super();
 		this.acc_id = acc_id;
 		this.name = name;
