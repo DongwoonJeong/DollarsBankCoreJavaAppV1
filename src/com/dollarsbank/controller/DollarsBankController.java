@@ -14,11 +14,20 @@ public class DollarsBankController {
 		Scanner input = new Scanner(System.in);
 		String username = "";
 		String password = "";
-		System.out.println("Please enter your new user name:");
+		String address = "";
+		String contact ="";
+		int initial = 0;
+		System.out.println("Customer Name:");
 		username = input.nextLine();
-		System.out.println("Please enter your new password:");
+		System.out.println("Customer Address:");
+		address = input.nextLine();
+		System.out.println("Customer Contact Email:");
+		contact = input.nextLine();
+		System.out.println("Passwod : 8 Characters With Lower,Upper & Special");
 		password = input.nextLine();
-		banksql.Register(username, password);
+		System.out.println("Initial Deposit Amout");
+		initial = input.nextInt();
+		banksql.CreateUser(username, address, contact, password, initial);
 		
 	}
 

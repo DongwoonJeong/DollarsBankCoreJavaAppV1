@@ -64,7 +64,7 @@ public class BankDao implements BankDaoInterface{
 				pstmt.setString(4, password);
 				pstmt.setInt(5, initialdeposit);
 				pstmt.executeUpdate();
-				System.out.printf("\nWelcome %s\n", username);
+				System.out.printf("\nThank you for join %s\n", username);
 
 			} catch (Exception e) {
 				System.out.println("Something went wrong, cannot create new account");
@@ -148,7 +148,7 @@ public class BankDao implements BankDaoInterface{
 	private int getUserId(String username) {
 
 		try {
-			PreparedStatement pstmt = connection.prepareStatement("Select user_id from TV_user where user_name = ?");
+			PreparedStatement pstmt = connection.prepareStatement("Select user_id from bank_user where user_name = ?");
 			pstmt.setString(1, username);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
