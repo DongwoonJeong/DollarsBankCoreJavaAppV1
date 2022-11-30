@@ -19,15 +19,16 @@ public class DollarsBankController {
 		int initial = 0;
 		System.out.println("Customer Name:");
 		username = input.nextLine();
-		System.out.println("Customer Address:");
-		address = input.nextLine();
 		System.out.println("Customer Contact Email:");
 		contact = input.nextLine();
+		System.out.println("Customer Address:");
+		address = input.nextLine();		
 		System.out.println("Passwod : 8 Characters With Lower,Upper & Special");
 		password = input.nextLine();
 		System.out.println("Initial Deposit Amout");
 		initial = input.nextInt();
-		banksql.CreateUser(username, address, contact, password, initial);
+		System.out.println(username+ contact+ address+ password+ initial);
+		banksql.CreateUser(username, contact, address, password, initial);
 		
 	}
 

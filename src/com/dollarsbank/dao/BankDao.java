@@ -17,15 +17,15 @@ public class BankDao implements BankDaoInterface{
 	private Connection connection = ConnManagerWithProperties.getConnection();
 	
 	@Override
-	public boolean login(String username, String inPassword) {
+	public boolean login(String user_id, String password) {
 		try {
 
 			PreparedStatement pstmt1 = connection
-					.prepareStatement("Select user_name from bank_user where user_name = ? ");
+					.prepareStatement("Select user_id from bank_user where user_id = ? ");
 			PreparedStatement pstmt2 = connection
 					.prepareStatement("Select user_password from bank_user where user_password = ?");
-			pstmt1.setString(1, username);
-			pstmt2.setString(1, inPassword);
+			pstmt1.setString(1, user_id);
+			pstmt2.setString(1, password);
 			// pstmt1.setString
 			ResultSet rs1 = pstmt1.executeQuery();
 			ResultSet rs2 = pstmt2.executeQuery();
@@ -33,7 +33,7 @@ public class BankDao implements BankDaoInterface{
 			boolean exists2 = rs2.next();
 
 			if (exists1 == true && exists2 == true) {
-				System.out.printf("\n\n\nWelcome %s\n", username);
+				System.out.printf("\n\n\nWelcome %s\n", user_id);
 				// add method that take care of after login.
 				return true;
 			} else if (exists1 == true) {
@@ -79,9 +79,9 @@ public class BankDao implements BankDaoInterface{
 			PreparedStatement pstmt = connection
 					.prepareStatement("update watch_instance set watch_instance.status_id = ? "
 							+ "where watch_instance.show_id = ? && watch_instance.user_id = ?");
-			pstmt.setInt(1, x);
-			pstmt.setInt(2, getShowId(showTitle));
-			pstmt.setInt(3, getUserId(username));
+//			pstmt.setInt(1, x);
+//			pstmt.setInt(2, getShowId(showTitle));
+//			pstmt.setInt(3, getUserId(username));
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -100,9 +100,9 @@ public class BankDao implements BankDaoInterface{
 			PreparedStatement pstmt = connection
 					.prepareStatement("update watch_instance set watch_instance.status_id = ? "
 							+ "where watch_instance.show_id = ? && watch_instance.user_id = ?");
-			pstmt.setInt(1, x);
-			pstmt.setInt(2, getShowId(showTitle));
-			pstmt.setInt(3, getUserId(username));
+//			pstmt.setInt(1, x);
+//			pstmt.setInt(2, getShowId(showTitle));
+//			pstmt.setInt(3, getUserId(username));
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -121,9 +121,9 @@ public class BankDao implements BankDaoInterface{
 			PreparedStatement pstmt = connection
 					.prepareStatement("update watch_instance set watch_instance.status_id = ? "
 							+ "where watch_instance.show_id = ? && watch_instance.user_id = ?");
-			pstmt.setInt(1, x);
-			pstmt.setInt(2, getShowId(showTitle));
-			pstmt.setInt(3, getUserId(username));
+//			pstmt.setInt(1, x);
+//			pstmt.setInt(2, getShowId(showTitle));
+//			pstmt.setInt(3, getUserId(username));
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
