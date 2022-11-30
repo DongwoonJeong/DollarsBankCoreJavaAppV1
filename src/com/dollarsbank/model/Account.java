@@ -12,12 +12,12 @@ public class Account {
 	private String password;
 	private String address;
 	private String contact;
-	private int initial;
+	private double initial;
 	private List<String> history;
 	
 	
 
-	public Account(String acc_id, String name, String contact, String address, String password, int initial, List<String> history) {
+	public Account(String acc_id, String name, String contact, String address, String password, double initial, List<String> history) {
 		super();
 		this.acc_id = acc_id;
 		this.name = name;
@@ -39,13 +39,13 @@ public class Account {
 	}
 
 
-	public int getInitial() {
+	public double getInitial() {
 		return initial;
 	}
 
 
-	public void setInitial(int initial) {
-		this.initial = initial;
+	public void setInitial(double bal) {
+		this.initial = bal;
 	}
 
 

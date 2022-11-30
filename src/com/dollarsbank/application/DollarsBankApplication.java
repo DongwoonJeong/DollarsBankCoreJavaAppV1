@@ -5,7 +5,7 @@ import java.util.*;
 
 public class DollarsBankApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		boolean run = true;
 		Scanner sc = new Scanner(System.in);
 		DollarsBankController control = new DollarsBankController();

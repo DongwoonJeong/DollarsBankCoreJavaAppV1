@@ -6,7 +6,7 @@ public class BadLoginCredentialException extends Exception{
 
 	public BadLoginCredentialException()
 	{
-		super("Invalid Credentials. Try Again! \n Max attemp 3");
+		super("Invalid Credentials. Try Again!");
 	    
 	}
 }
