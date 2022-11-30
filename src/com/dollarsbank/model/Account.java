@@ -95,13 +95,14 @@ public class Account {
 
 
 	public void setHistory(String history) {
-		this.history += history;
+		this.history += "\n"+history+"\n";
 	}
 
 
 	@Override
 	public String toString() {
-		return "Account [history=" + history + "]";
+		return "Account [acc_id=" + acc_id + ", name=" + name + ", password=" + password + ", address=" + address
+				+ ", contact=" + contact + ", initial=" + initial + ", history=" + history + "]";
 	}
 	
 	

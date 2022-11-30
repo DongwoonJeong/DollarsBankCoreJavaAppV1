@@ -43,18 +43,21 @@ public class DollarsBankController {
 			System.out.println("Initial Deposit Amout");
 			initial = sc2.nextInt();
 			// banksql.CreateUser(username, contact, address, password, initial);
+			
 			accounts.add(new Account(acc_id, username, contact, address, password, initial, "initial deposit : "+initial+" "+new Date()));
-			System.out.println("account created : " + accounts);
+			System.out.println("account created " + new Date());
 			create = true;
 
 		}
 
 	}
-	public boolean login(int id, String password) throws AccountNotFoundException{
+	public boolean login(String id, String password) throws AccountNotFoundException{
 		
-		
-		
-		return false;
+		for(int i=0; i<accounts.size(); i++) {
+			if(accounts.get(i).getAcc_id().equals(id) && accounts.get(i).getPassword().equals(password)) {
+				return true;
+			}
+		}return false;
 		
 	}
 	public void bankLogin() throws Exception {
@@ -70,22 +73,24 @@ public class DollarsBankController {
 		System.out.println("Passwod :");
 		String password = sc.nextLine();
 
-		while (!login) {
+	
 
 			try {
-				for (Account acc : accounts) {
-					if (acc.getAcc_id().equals(acc_id) && acc.getPassword().equals(password)) {
+				
+					if (login(acc_id, password)) {
 						System.out.println("login success");
 						login = true;
 					} else {
+						while (!login) {
 						System.out.println("user account cannot be found.");
 						throw new BadLoginCredentialException();
 					}
-				}
+					}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		
 		while (login) {
 			try {
 				System.out.println("+---------------------+");
@@ -113,7 +118,11 @@ public class DollarsBankController {
 					withraw(acc_id, with);
 					break;
 				case 3:
-					transfer();
+					System.out.println("To which user?");
+					int accountTo = input.nextInt();
+					System.out.println("Amount");
+					int amount = input.nextInt();
+					transfer(accountTo, amount);
 					break;
 				case 4:
 					history(id);
@@ -134,27 +143,29 @@ public class DollarsBankController {
 	private void info(int id) {
 		for (int i = 0; i < accounts.size(); i++) {
 			if (accounts.get(i).getAcc_id().equals(String.valueOf(id))) {
-		System.out.println("--------------------------------");
-		System.out.println("User Id: " + accounts.get(i).getAcc_id());
-		System.out.println("User Name: " + accounts.get(i).getName());
-		System.out.println("Address: " + accounts.get(i).getAddress());
-		System.out.println("Balance: " + accounts.get(i).getInitial());
-		System.out.println("--------------------------------");
-	}
+				System.out.println("--------------------------------");
+				System.out.println("User Id: " + accounts.get(i).getAcc_id());
+				System.out.println("User Name: " + accounts.get(i).getName());
+				System.out.println("Address: " + accounts.get(i).getAddress());
+				System.out.println("Balance: " + accounts.get(i).getInitial());
+				System.out.println("--------------------------------");
+			}
 		}
 	}
 
 	private void history(int id) {
-		for (int i = 0; i < 5; i++) {
+		System.out.println("+---------------------+");
+		System.out.println("| Transaction History |");
+		System.out.println("+---------------------+");
 			for (Account acc : accounts) {
 				if (acc.getAcc_id().equals(String.valueOf(id))) {
 					System.out.println(acc.getHistory() + "\n");
 				}
 			}
 		}
-	}
+	
 
-	private void transfer() {
+	private void transfer(int accountTo, int amount) {
 
 	}
 
@@ -167,12 +178,12 @@ public class DollarsBankController {
 
 				} else {
 					double bal = acc.getInitial() - with;
-					
-				String str = with + " taken out. end balance : " + bal+" " + new Date();
+
+					String str = with + " taken out. end balance : " + bal + " " + new Date();
 					System.out.println(str);
 					acc.setInitial(bal);
-					acc.setHistory(str+"\n");
-					
+					acc.setHistory(str + "\n");
+
 				}
 			}
 
