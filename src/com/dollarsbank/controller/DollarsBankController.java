@@ -1,7 +1,9 @@
 package com.dollarsbank.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import com.dollarsbank.exception.AccountNotFoundException;
@@ -11,7 +13,7 @@ import com.dollarsbank.model.Account;
 public class DollarsBankController {
 	// BankDao banksql = new BankDao();
 	private ArrayList<Account> accounts = new ArrayList<Account>();
-
+	private List<String> history = new ArrayList<>();
 	Scanner input = new Scanner(System.in);
 
 	public void createAccount() {
@@ -41,7 +43,7 @@ public class DollarsBankController {
 			System.out.println("Initial Deposit Amout");
 			initial = sc2.nextInt();
 			// banksql.CreateUser(username, contact, address, password, initial);
-			accounts.add(new Account(acc_id, username, contact, address, password, initial, null));
+			accounts.add(new Account(acc_id, username, contact, address, password, initial, "initial deposit : "+initial+" "+new Date()));
 			System.out.println("account created : " + accounts);
 			create = true;
 
@@ -58,7 +60,7 @@ public class DollarsBankController {
 	public void bankLogin() throws Exception {
 		Scanner sc = new Scanner(System.in);
 
-		accounts.add(new Account("0", "0", "0", "0", "0", 1, null));
+		accounts.add(new Account("0", "0", "0", "0", "0", 1, " "));
 		boolean login = false;
 		System.out.println("+---------------------+");
 		System.out.println("| Enter Login Details |");
@@ -71,9 +73,6 @@ public class DollarsBankController {
 		while (!login) {
 
 			try {
-				//for (int i = 0; i < accounts.size(); i++) {
-				//	if (accounts.get(i).getAcc_id() == acc_id) {
-				//		System.out.println("123");
 				for (Account acc : accounts) {
 					if (acc.getAcc_id().equals(acc_id) && acc.getPassword().equals(password)) {
 						System.out.println("login success");
@@ -117,7 +116,7 @@ public class DollarsBankController {
 					transfer();
 					break;
 				case 4:
-					history();
+					history(id);
 					break;
 				case 5:
 					info(id);
@@ -144,8 +143,15 @@ public class DollarsBankController {
 	}
 		}
 	}
-	private void history() {
 
+	private void history(int id) {
+		for (int i = 0; i < 5; i++) {
+			for (Account acc : accounts) {
+				if (acc.getAcc_id().equals(String.valueOf(id))) {
+					System.out.println(acc.getHistory() + "\n");
+				}
+			}
+		}
 	}
 
 	private void transfer() {
@@ -161,8 +167,12 @@ public class DollarsBankController {
 
 				} else {
 					double bal = acc.getInitial() - with;
-					System.out.println(with + " taken out. end balance : " + bal);
+					
+				String str = with + " taken out. end balance : " + bal+" " + new Date();
+					System.out.println(str);
 					acc.setInitial(bal);
+					acc.setHistory(str+"\n");
+					
 				}
 			}
 
@@ -175,22 +185,15 @@ public class DollarsBankController {
 			for (Account acc : accounts) {
 				if (acc.getAcc_id().equals(id)) {
 					bal = depo + acc.getInitial();
-					System.out.println(depo + " Deposited. end balance : " + bal);
+					String str = depo + " Deposited. end balance : " + bal+ " " + new Date();
+					System.out.println(str);
 					acc.setInitial(bal);
+					acc.setHistory(str+"\n");				
 				}
-
 			}
 		} else {
 			System.out.println("deposit should be more then 0.");
 		}
-	}
-
-	public ArrayList<Account> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(ArrayList<Account> accounts) {
-		this.accounts = accounts;
 	}
 
 }

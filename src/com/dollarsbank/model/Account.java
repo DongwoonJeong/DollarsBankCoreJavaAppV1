@@ -13,11 +13,11 @@ public class Account {
 	private String address;
 	private String contact;
 	private double initial;
-	private List<String> history;
+	private String history;
 	
 	
 
-	public Account(String acc_id, String name, String contact, String address, String password, double initial, List<String> history) {
+	public Account(String acc_id, String name, String contact, String address, String password, double initial, String history) {
 		super();
 		this.acc_id = acc_id;
 		this.name = name;
@@ -89,20 +89,19 @@ public class Account {
 	}
 
 
-	public List<String> getHistory() {
+	public String getHistory() {
 		return history;
 	}
 
 
-	public void setHistory(List<String> history) {
-		this.history = history;
+	public void setHistory(String history) {
+		this.history += history;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Account [acc_id=" + acc_id + ", name=" + name + ", password=" + password + ", address=" + address
-				+ ", contact=" + contact + ", initial=" + initial + ", history=" + history + "]";
+		return "Account [history=" + history + "]";
 	}
 	
 	
