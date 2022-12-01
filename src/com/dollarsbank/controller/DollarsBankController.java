@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import com.dollarsbank.exception.AccountNotFoundException;
 import com.dollarsbank.exception.BadLoginCredentialException;
+import com.dollarsbank.exception.InvalidTransactionException;
 import com.dollarsbank.model.Account;
 
 public class DollarsBankController {
@@ -60,9 +61,20 @@ public class DollarsBankController {
 		}return false;
 		
 	}
+	
+	public boolean validIdCheck(String id) throws AccountNotFoundException{
+		for(int i=0; i<accounts.size(); i++) {
+			if(accounts.get(i).getAcc_id().equals(id) ) {
+				return true;
+			}else {
+				throw new AccountNotFoundException();
+			}
+		}return false;
+	}
+	
 	public void bankLogin() throws Exception {
 		Scanner sc = new Scanner(System.in);
-
+		Scanner sc2 = new Scanner(System.in);
 		accounts.add(new Account("0", "0", "0", "0", "0", 1, " "));
 		boolean login = false;
 		System.out.println("+---------------------+");
@@ -103,25 +115,28 @@ public class DollarsBankController {
 				System.out.println("5. Display Customer Information");
 				System.out.println("6. Sign Out");
 
-				int selec = input.nextInt();
+				int selec = Integer.parseInt(input.nextLine());
 				int id = Integer.parseInt(acc_id);
 				switch (selec) {
 				case 1:
 					System.out.println("deposit amount");
-					double depo = input.nextInt();
+					double depo = Double.parseDouble(input.nextLine());
 
 					deposit(acc_id, depo);
 					break;
 				case 2:
 					System.out.println("withraw amount");
-					double with = input.nextInt();
+					double with = Double.parseDouble(input.nextLine());
 					withraw(acc_id, with);
 					break;
 				case 3:
+					System.out.println("+------------------+");
+					System.out.println("|  Fund Transfer  | ");
+					System.out.println("+------------------+");
 					System.out.println("To which user?");
-					int accountTo = input.nextInt();
+					String accountTo = sc2.nextLine();
 					System.out.println("Amount");
-					int amount = input.nextInt();
+					double amount = Double.parseDouble(sc2.nextLine());
 					transfer(acc_id, accountTo, amount);
 					break;
 				case 4:
@@ -149,6 +164,7 @@ public class DollarsBankController {
 				System.out.println("Address: " + accounts.get(i).getAddress());
 				System.out.println("Balance: " + accounts.get(i).getInitial());
 				System.out.println("--------------------------------");
+				
 			}
 		}
 	}
@@ -159,25 +175,40 @@ public class DollarsBankController {
 		System.out.println("+---------------------+");
 			for (Account acc : accounts) {
 				if (acc.getAcc_id().equals(String.valueOf(id))) {
-					System.out.println(acc.getHistory() + "\n");
+					
+						System.out.println(acc.getHistory() + "\n");
+					
 				}
 			}
 		}
 	
 
-	private void transfer(String id, int accountTo, int amount) {
+	private void transfer(String id, String accountTo, double amount) throws InvalidTransactionException{
 		for (Account acc : accounts) {
-			if (acc.getAcc_id().equals(String.valueOf(id))) {
+			if (acc.getAcc_id().equals(accountTo) == false) {
+				System.out.println("The user with ID " + accountTo + " does not exist.");
 				if (acc.getInitial() < amount) {
-					System.out.println("cant withdraw more that remaining balance.");
-
+					System.out.println("Transfer amount must be less then balance.");
 				} else {
-					double bal = acc.getInitial() - amount;
+					for (Account acc2 : accounts) {
+						if (acc2.getAcc_id().equals(accountTo)) {
+							double bal = acc.getInitial() - amount;
+							double trans = bal + acc2.getInitial();
+							acc.setInitial(bal);
+							acc2.setInitial(trans);
+							String str = "Transfer from user " + id + " to user " + accountTo + " amount " + amount + " has been initialted.";
+							acc.setHistory(str);
+							acc2.setHistory(str);
+							System.out.println(str);
+						}
+
+					}
+				}
 			}
 		}
-	}
-	}
-	private void withraw(String id, double with) {
+		}
+	
+	private void withraw(String id, double with) throws InvalidTransactionException{
 
 		for (Account acc : accounts) {
 			if (acc.getAcc_id().equals(id)) {
@@ -198,7 +229,7 @@ public class DollarsBankController {
 		}
 	}
 
-	private void deposit(String id, double depo) {
+	private void deposit(String id, double depo)  throws InvalidTransactionException{
 		double bal = 0;
 		if (depo > 0) {
 			for (Account acc : accounts) {
