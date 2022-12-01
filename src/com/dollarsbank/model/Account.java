@@ -95,7 +95,7 @@ public class Account {
 
 
 	public void setHistory(String history) {
-		this.history += "\n"+history+"\n";
+		this.history += "\n"+history;
 	}
 
 

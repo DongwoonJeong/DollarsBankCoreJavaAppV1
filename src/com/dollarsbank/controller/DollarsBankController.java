@@ -122,7 +122,7 @@ public class DollarsBankController {
 					int accountTo = input.nextInt();
 					System.out.println("Amount");
 					int amount = input.nextInt();
-					transfer(accountTo, amount);
+					transfer(acc_id, accountTo, amount);
 					break;
 				case 4:
 					history(id);
@@ -165,10 +165,18 @@ public class DollarsBankController {
 		}
 	
 
-	private void transfer(int accountTo, int amount) {
+	private void transfer(String id, int accountTo, int amount) {
+		for (Account acc : accounts) {
+			if (acc.getAcc_id().equals(String.valueOf(id))) {
+				if (acc.getInitial() < amount) {
+					System.out.println("cant withdraw more that remaining balance.");
 
+				} else {
+					double bal = acc.getInitial() - amount;
+			}
+		}
 	}
-
+	}
 	private void withraw(String id, double with) {
 
 		for (Account acc : accounts) {
